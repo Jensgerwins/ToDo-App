@@ -10,7 +10,7 @@ body{
     right: 25%;
     display: block;
    width: 50%;
-    background-color: aqua;
+    background-color:coral;
 }
 #todos {
    
@@ -35,4 +35,5 @@ header {
     color: aliceblue;
     border: 3px solid crimson;
 flex-wrap:wrap;
+flex-grow: inherit;
 }
