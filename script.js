@@ -3,38 +3,91 @@ const addTodo = document.querySelector(".add-Todos");
 const deletbtn = document.querySelector(".delete-Todos");
 const listContainer = document.querySelector("#listcontainer");
 
-const state = [];
+const state = {
+    todos: [
 
 
 
 
-addTodo.addEventListener("click", addList);
+    ]
+};
 
-deletbtn.addEventListener("click", () => {
-    console.log("delete");
+
+
+
+addTodo.addEventListener("submit", (event) => {
+    event.preventDefault();
+    addList();
+    rendern();
+    event.target.reset();
+
+});
+
+deletbtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    deletTodo();
+    rendern();
 
 });
 
 
+function renderitem(todo) {
+    const newLi = document.createElement("li");
+    const newcheckBox = document.createElement("input");
+    newcheckBox.type = "checkbox";
+    newcheckBox.checked = todo.done;
+    const text = document.createTextNode(todo.description);
 
-function addList() {
-    const newEl = document.createElement("ul");
-
-    const newTodo = textFeld.value;
-    state.push(newTodo);
-    state.forEach(item => {
-        const li = document.createElement("li");
-        li.innerText = item;
-        const button = document.createElement("checkbox");
-        button.addEventListener("click", () => {
-
-        })
-        button.innerText = "";
-        li.appendChild(button);
-        newEl.appendChild(li);
+    if (todo.done) {
+        newLi.classList.toggle("strike-through");
+    }
+    newcheckBox.addEventListener("change", () => {
+        todo.done = !todo.done;
+        rendern();
     });
 
-    listContainer.innerText = "";
-    listContainer.appendChild(newEl);
+
+    newLi.append(newcheckBox, text);
+
+    return newLi;
+
 
 }
+
+
+function addList() {
+
+
+    state.todos.push({
+        id: +new Date(),
+        description: textFeld.value,
+        done: false,
+    });
+
+
+
+}
+
+function rendern() {
+
+    listContainer.innerHTML = "";
+    for (let todo of state.todos) {
+        const newTodos = renderitem(todo);
+        listContainer.append(newTodos);
+
+    }
+
+
+
+};
+
+rendern();
+
+function deletTodo() {
+    state.todos = state.todos.filter((todo) => !todo.done);
+}
+
+
+
+
+
