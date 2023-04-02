@@ -46,10 +46,10 @@ function renderitem(todo) {
     newcheckBox.type = "checkbox";
     newcheckBox.checked = todo.done;
     const text = document.createTextNode(todo.description);
-    if (text !== 
+
     if (todo.done) {
-            newLi.classList.toggle("strike-through");
-        }
+        newLi.classList.toggle("strike-through");
+    }
     newcheckBox.addEventListener("change", () => {
         todo.done = !todo.done;
         updateLocalStorage();
