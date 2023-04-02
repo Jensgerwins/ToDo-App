@@ -9,10 +9,19 @@ const state = {
 
 
 
-    ]
+    ],
 };
 
+const localTodosObj = JSON.parse(localStorage.getItem("todos"));
 
+
+if (Array.isArray(localTodosObj)) {
+    state.todos = localTodosObj;
+}
+
+function updateLocalStorage() {
+    localStorage.setItem("todos", JSON.stringify(state.todos));
+}
 
 
 addTodo.addEventListener("submit", (event) => {
@@ -37,12 +46,13 @@ function renderitem(todo) {
     newcheckBox.type = "checkbox";
     newcheckBox.checked = todo.done;
     const text = document.createTextNode(todo.description);
-
+    if (text !== 
     if (todo.done) {
-        newLi.classList.toggle("strike-through");
-    }
+            newLi.classList.toggle("strike-through");
+        }
     newcheckBox.addEventListener("change", () => {
         todo.done = !todo.done;
+        updateLocalStorage();
         rendern();
     });
 
@@ -64,7 +74,7 @@ function addList() {
         done: false,
     });
 
-
+    updateLocalStorage();
 
 }
 
@@ -80,11 +90,12 @@ function rendern() {
 
 
 };
-
 rendern();
+
 
 function deletTodo() {
     state.todos = state.todos.filter((todo) => !todo.done);
+    updateLocalStorage();
 }
 
 
