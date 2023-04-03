@@ -2,15 +2,38 @@ const textFeld = document.querySelector(".todo-Text");
 const addTodo = document.querySelector(".add-Todos");
 const deletbtn = document.querySelector(".delete-Todos");
 const listContainer = document.querySelector("#listcontainer");
+const filterall = document.querySelector("#filter-all");
+const filteropen = document.querySelector("#filter-open");
+const filterdone = document.querySelector("#filter-done");
 
 const state = {
-    todos: [
+    todos: [],
 
-
-
-
-    ],
 };
+
+filteropen.addEventListener("change", (event) => {
+    event.preventDefault();
+    openfilter();
+    rendern();
+
+
+});
+
+
+
+
+filterdone.addEventListener("change", (event) => {
+    event.preventDefault();
+    donefilter();
+    rendern();
+
+});
+filterall.addEventListener("change", (event) => {
+    event.preventDefault();
+    allfilter();
+    rendern();
+
+});
 
 const localTodosObj = JSON.parse(localStorage.getItem("todos"));
 
@@ -40,6 +63,7 @@ deletbtn.addEventListener("click", (event) => {
 });
 
 
+
 function renderitem(todo) {
     const newLi = document.createElement("li");
     const newcheckBox = document.createElement("input");
@@ -66,14 +90,14 @@ function renderitem(todo) {
 
 
 function addList() {
+    if (state.todos.description !== "") {
 
-
-    state.todos.push({
-        id: +new Date(),
-        description: textFeld.value,
-        done: false,
-    });
-
+        state.todos.push({
+            id: +new Date(),
+            description: textFeld.value,
+            done: false,
+        });
+    }
     updateLocalStorage();
 
 }
@@ -85,6 +109,7 @@ function rendern() {
         const newTodos = renderitem(todo);
         listContainer.append(newTodos);
 
+
     }
 
 
@@ -95,10 +120,20 @@ rendern();
 
 function deletTodo() {
     state.todos = state.todos.filter((todo) => !todo.done);
-    updateLocalStorage();
+
+}
+
+function donefilter() {
+    state.todos = state.todos.filter((todo) => todo.done);
+
+}
+function openfilter() {
+    state.todos = state.todos.filter((todo) => !todo.done);
+
 }
 
 
+function allfilter() {
+    rendern();
 
-
-
+}
