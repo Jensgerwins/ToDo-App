@@ -5,45 +5,26 @@ const listContainer = document.querySelector("#listcontainer");
 const filterall = document.querySelector("#filter-all");
 const filteropen = document.querySelector("#filter-open");
 const filterdone = document.querySelector("#filter-done");
-
+const filterInputs =document.querySelectorAll("input[name=radio]");
 const state = {
     todos: [],
-
+    filter: [],
 };
 
-filteropen.addEventListener("change", (event) => {
-    event.preventDefault();
-    openfilter();
-    rendern();
 
-
-});
-
-
-
-
-filterdone.addEventListener("change", (event) => {
-    event.preventDefault();
-    donefilter();
-    rendern();
-
-});
-filterall.addEventListener("change", (event) => {
-    event.preventDefault();
-    allfilter();
-    rendern();
-
-});
 
 const localTodosObj = JSON.parse(localStorage.getItem("todos"));
-
-
-if (Array.isArray(localTodosObj)) {
+const localFilteOBJ = JSON.parse(localStorage.getItem("filter"));
+    if(Array.isArray(localFilteOBJ)){
+    state.filter = localFilteOBJ;
+}
+    if (Array.isArray(localTodosObj)) {
     state.todos = localTodosObj;
 }
 
 function updateLocalStorage() {
     localStorage.setItem("todos", JSON.stringify(state.todos));
+    localStorage.setItem("filter", JSON.stringify(state.filter));
 }
 
 
@@ -62,7 +43,14 @@ deletbtn.addEventListener("click", (event) => {
 
 });
 
-
+filterInputs.forEach(input  => {
+    input.addEventListener("change", (event) => {
+  
+        console.log(event.target.value);
+       
+    rendern(event.target.value);
+        })
+})
 
 function renderitem(todo) {
     const newLi = document.createElement("li");
@@ -74,12 +62,23 @@ function renderitem(todo) {
     if (todo.done) {
         newLi.classList.toggle("strike-through");
     }
+ 
     newcheckBox.addEventListener("change", () => {
         todo.done = !todo.done;
         updateLocalStorage();
         rendern();
     });
 
+
+
+newLi.append(newcheckBox, text);
+
+updateLocalStorage();
+
+
+
+
+    
 
     newLi.append(newcheckBox, text);
 
@@ -102,19 +101,28 @@ function addList() {
 
 }
 
-function rendern() {
+function rendern(filter="all") {
+let filteredTodos =state.todos;
+if(filter === "done") {
+filteredTodos = state.todos.filter(todo=> todo.done);
+} else if (filter === "open") {
+    filteredTodos = state.todos.filter(todo=> !todo.done);
 
+}
     listContainer.innerHTML = "";
-    for (let todo of state.todos) {
+    for (let todo of filteredTodos) {
         const newTodos = renderitem(todo);
         listContainer.append(newTodos);
 
 
     }
 
+   
+   
+  }
 
 
-};
+
 rendern();
 
 
@@ -123,17 +131,3 @@ function deletTodo() {
 
 }
 
-function donefilter() {
-    state.todos = state.todos.filter((todo) => todo.done);
-
-}
-function openfilter() {
-    state.todos = state.todos.filter((todo) => !todo.done);
-
-}
-
-
-function allfilter() {
-    rendern();
-
-}
