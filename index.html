@@ -11,39 +11,40 @@
 
 <body>
     <div class="container">
-    <header>
-        <h1>ToDo-App</h1>
-    </header>
-    <main>
-    <div id="todos">
-        
-             <form class="add-Todos">
-                <label for="ToDo">ToDos</label>
-            <input class="todo-Text" type="text">
-            <button>Add-ToDos</button>
-            <article id="filter-buttons">
-                <h1>Filter & Option</h1><div>
-                <label for="All">All</label>
-                <input id="filter-all" type="radio" checked="checked" name="radio" value="all">
-                </div>
-                <div>            
-                    <label for="Open">Open</label>
-                <input id="filter-open" type="radio" name="radio" value="open">
-                </div>
-                <div>               
-                     <label for="Done">Done</label>
-                <input id="filter-done" type="radio" name="radio" value="done">
+        <header>
+            <h1>ToDo-App</h1>
+        </header>
+        <main>
+            <div id="todos">
+
+                <form class="add-Todos">
+                    <label for="ToDo">ToDos</label>
+                    <input class="todo-Text" type="text">
+                    <button>Add-ToDos</button>
+                    <article id="filter-buttons">
+                        <h1>Filter & Option</h1>
+                        <div>
+                            <label for="All">All</label>
+                            <input id="filter-all" type="radio" checked="checked" name="radio" value="all">
+                        </div>
+                        <div>
+                            <label for="Open">Open</label>
+                            <input id="filter-open" type="radio" name="radio" value="open">
+                        </div>
+                        <div>
+                            <label for="Done">Done</label>
+                            <input id="filter-done" type="radio" name="radio" value="done">
+                        </div>
+                    </article>
+                </form>
+                <button class="delete-Todos">Delete-Todos</button>
+                </form>
+
+                <h2 id="todos-uberschrift">Todos</h2>
+
+                <div id="listcontainer"></div>
             </div>
-            </article>
-             </form>
-        <button class="delete-Todos">Delete-Todos</button>
-        </form>
-        
-            <h2 id="todos-uberschrift">Todos</h2>
-    
-        <div id="listcontainer"></div>
-    </div>
-</main>
+        </main>
     </div>
     <script src="script.js"></script>
 </body>
